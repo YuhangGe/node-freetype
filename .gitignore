@@ -1,0 +1,10 @@
+# Created by .gitignore support plugin (hsz.mobi)
+node_modules
+build
+.idea
+
+test/fonts/NotoSansHans-Black.ttf
+test/fonts/NotoSansHans-Medium.ttf
+test/fonts/NotoSansHans-Thin.otf
+
+.DS_Store

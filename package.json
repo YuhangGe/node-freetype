@@ -1,0 +1,21 @@
+{
+  "name": "node-freetype",
+  "version": "1.0.0",
+  "description": "nodejs freetype binding",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "font",
+    "freetype",
+    "woff",
+    "ttf"
+  ],
+  "author": "Yuhang Ge",
+  "license": "Apache",
+  "dependencies": {
+    "nan": "^1.3.0",
+    "underscore": "^1.7.0"
+  }
+}
