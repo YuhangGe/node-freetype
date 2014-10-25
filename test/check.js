@@ -16,7 +16,7 @@ var charcode = _.map(charset, function(c) {
 
 //var glyphs = font.getGlyphArray(charcode);
 
+console.log(font.info);
 console.log(font.tables.head);
 
-console.log(font.tables.head.magicNumber.toString(16));
 //console.log(font.tables.head.magicNumber.toString(16));
