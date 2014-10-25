@@ -1,9 +1,6 @@
 #include <nan.h>
 #include "freetype.h"
 
-#define OBJ_SET_INTEGER(key, value) \
-  obj->Set(String::NewSymbol(key), Integer::New(value))
-
 using namespace v8;
 
 Persistent<Function> FreeType::constructor;
@@ -25,14 +22,18 @@ void FreeType::Init() {
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
   //prototype
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("getGlyphByCharCode"),
-    FunctionTemplate::New(GetGlyphArray)->GetFunction());
-
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("test"),
-    FunctionTemplate::New(Test)->GetFunction());
-
-  tpl->PrototypeTemplate()->Set(String::NewSymbol("getHeader"),
-    FunctionTemplate::New(GetHeader)->GetFunction());
+//  tpl->PrototypeTemplate()->Set(String::NewSymbol("getGlyphByCharCode"),
+//    FunctionTemplate::New(GetGlyphArray)->GetFunction());
+//
+//  tpl->PrototypeTemplate()->Set(String::NewSymbol("test"),
+//    FunctionTemplate::New(Test)->GetFunction());
+//
+//  tpl->PrototypeTemplate()->Set(String::NewSymbol("getHeaderTable"),
+//    FunctionTemplate::New(GetHeader)->GetFunction());
+  TPL_SET_FUNC("getHeaderTable", GetHeaderTable);
+  TPL_SET_FUNC("test", Test);
+  TPL_SET_FUNC("getOS2Table", GetOS2Table);
+  TPL_SET_FUNC("getNameTable", GetNameTable);
 
   constructor = v8::Persistent<Function>::New(tpl->GetFunction());
 }
@@ -121,88 +122,9 @@ void FreeType::SetObjectProperties(Handle<Object> obj) {
 
 NAN_METHOD(FreeType::Test) {
   NanScope();
-  FreeType* obj = ObjectWrap::Unwrap<FreeType>(args.This());
-  TT_Header* header = (TT_Header*) FT_Get_Sfnt_Table(obj->face, ft_sfnt_head);
-  printf("t %lx \n", header->Table_Version);
-
-  TT_OS2*  os2;
-  os2 = (TT_OS2*)FT_Get_Sfnt_Table(obj->face, ft_sfnt_os2 );
-  printf("v: %d\n", os2->usLastCharIndex);
 
   NanReturnValue(String::New("hello, world."));
 }
-
-NAN_METHOD(FreeType::GetHeader) {
-  NanScope();
-  FreeType* ff = ObjectWrap::Unwrap<FreeType>(args.This());
-  TT_Header* header = (TT_Header*) FT_Get_Sfnt_Table(ff->face, ft_sfnt_head);
-  if(header == NULL) {
-    NanReturnNull();
-  }
-
-  // printf("t %x \n", header->Table_Version);
-/*
-typedef struct  TT_Header_
-  {
-    FT_Fixed   Table_Version;
-    FT_Fixed   Font_Revision;
-
-    FT_Long    CheckSum_Adjust;
-    FT_Long    Magic_Number;
-
-    FT_UShort  Flags;
-    FT_UShort  Units_Per_EM;
-
-    FT_Long    Created [2];
-    FT_Long    Modified[2];
-
-    FT_Short   xMin;
-    FT_Short   yMin;
-    FT_Short   xMax;
-    FT_Short   yMax;
-
-    FT_UShort  Mac_Style;
-    FT_UShort  Lowest_Rec_PPEM;
-
-    FT_Short   Font_Direction;
-    FT_Short   Index_To_Loc_Format;
-    FT_Short   Glyph_Data_Format;
-
-  } TT_Header;
-*/
-  Local<Object> obj = Object::New();
-  
-  OBJ_SET_INTEGER("tableVersion", header->Table_Version);
-  OBJ_SET_INTEGER("fontRevision", header->Font_Revision);
-  OBJ_SET_INTEGER("checkSumAdjust", header->CheckSum_Adjust);
-  OBJ_SET_INTEGER("magicNumber", header->Magic_Number);
-  OBJ_SET_INTEGER("flags", header->Flags);
-  OBJ_SET_INTEGER("unitsPerEM", header->Units_Per_EM);
-  // OBJ_SET_INTEGER("tableVersion", header->Created);
-  // OBJ_SET_INTEGER("tableVersion", header->Modified);
-
-  OBJ_SET_INTEGER("xMin", header->xMin);
-  OBJ_SET_INTEGER("yMin", header->yMin);
-  OBJ_SET_INTEGER("xMax", header->xMax);
-  OBJ_SET_INTEGER("yMax", header->yMax);
-
-  OBJ_SET_INTEGER("macStyle", header->Mac_Style);
-  OBJ_SET_INTEGER("lowestRecPPEM", header->Lowest_Rec_PPEM);
-  OBJ_SET_INTEGER("fontDirection", header->Font_Direction);
-  OBJ_SET_INTEGER("indexToLocFormat", header->Index_To_Loc_Format);
-  OBJ_SET_INTEGER("glyphDataFormat", header->Glyph_Data_Format);
-
-  NanReturnValue(obj);
-}
-
-NAN_METHOD(FreeType::GetOS2) {
-  NanScope();
-
-  Local<Object> obj = Object::New();
-
-  NanReturnValue(obj);
-}
-
 
 
 NAN_METHOD(FreeType::GetGlyphArray) {

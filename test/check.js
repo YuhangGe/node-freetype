@@ -16,8 +16,10 @@ var charcode = _.map(charset, function(c) {
 
 //var glyphs = font.getGlyphArray(charcode);
 
-console.log(font.info);
-console.log(font.tables.head);
+//console.log(font.info);
+//console.log(font.tables.head);
+console.log(font.tables.os2);
+console.log(font.tables.name);
 
 //todo
 //font.tables.os2

@@ -5,7 +5,14 @@
 #include <vector>
 #include <ft2build.h>
 #include FT_FREETYPE_H
-#include FT_TRUETYPE_TABLES_H
+
+#define OBJ_SET_INTEGER(key, value) \
+  obj->Set(String::NewSymbol(key), Integer::New(value))
+
+#define TPL_SET_FUNC(name, func) \
+  tpl->PrototypeTemplate()->Set(String::NewSymbol(name), \
+      FunctionTemplate::New(func)->GetFunction())
+
 
 using namespace v8;
 
@@ -26,9 +33,10 @@ class FreeType : public node::ObjectWrap {
     static NAN_METHOD(GetGlyphArray);
     static NAN_METHOD(Test);
 
-    static NAN_METHOD(GetHeader);
-    static NAN_METHOD(GetOS2);
-    
+    static NAN_METHOD(GetHeaderTable);
+    static NAN_METHOD(GetOS2Table);
+    static NAN_METHOD(GetNameTable);
+
     static FT_Library library;
     void SetObjectProperties(Handle<Object> obj);
 //    std::vector<FT_UInt> AvailableCharacters();
