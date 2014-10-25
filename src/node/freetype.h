@@ -36,10 +36,9 @@ class FreeType : public node::ObjectWrap {
     static NAN_METHOD(GetHeaderTable);
     static NAN_METHOD(GetOS2Table);
     static NAN_METHOD(GetNameTable);
+    static NAN_METHOD(GetInfoTable);
 
     static FT_Library library;
-    void SetObjectProperties(Handle<Object> obj);
-//    std::vector<FT_UInt> AvailableCharacters();
 };
 
 #endif

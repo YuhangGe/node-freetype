@@ -10,7 +10,8 @@
         'src/node/freetype.cc',
         'src/node/tables/header.cc',
         'src/node/tables/name.cc',
-        'src/node/tables/os2.cc'
+        'src/node/tables/os2.cc',
+        'src/node/tables/info.cc'
       ],
       "include_dirs" : [
         "<!(node -e \"require('nan')\")"
