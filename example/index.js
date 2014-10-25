@@ -4,4 +4,5 @@ var fs = require('fs'),
 var buf = fs.readFileSync(process.argv[2]);
 var font = freetype.parse(buf);
 
-console.log(font);
+console.log(font.info);
+console.log(font.tables.head);
