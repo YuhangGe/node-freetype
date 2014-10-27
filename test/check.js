@@ -4,7 +4,7 @@ var path = require('path');
 var _ = require('underscore');
 
 
-var src = fs.readFileSync(path.join(__dirname, 'fonts/NotoSansHans-Black.ttf'));
+var src = fs.readFileSync(path.join(__dirname, 'fonts/superid.ttf'));
 var font = freetype.parse(src);
 
 //var charset = 'abcdefg中国超级账号';
@@ -16,9 +16,9 @@ var charcode = _.map(charset, function(c) {
 
 //var glyphs = font.getGlyphArray(charcode);
 
-console.log(font.info);
-console.log(font.tables.head);
-console.log(font.tables.os2);
+//console.log(font.info);
+//console.log(font.tables.head);
+//console.log(font.tables.os2);
 console.log(font.tables.name);
 
 //todo

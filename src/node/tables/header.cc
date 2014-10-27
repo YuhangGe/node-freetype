@@ -49,8 +49,11 @@ NAN_METHOD(FreeType::GetHeaderTable) {
   OBJ_SET_INTEGER("magicNumber", header->Magic_Number);
   OBJ_SET_INTEGER("flags", header->Flags);
   OBJ_SET_INTEGER("unitsPerEM", header->Units_Per_EM);
-  // OBJ_SET_INTEGER("tableVersion", header->Created);
-  // OBJ_SET_INTEGER("tableVersion", header->Modified);
+
+  OBJ_SET_ARRAY("createdTime", header->Created, 2);
+  OBJ_SET_ARRAY("modifiedTime", header->Modified, 2);
+
+//  printf("%lx %lx \n", header->Modified[0], header->Modified[1]);
 
   OBJ_SET_INTEGER("xMin", header->xMin);
   OBJ_SET_INTEGER("yMin", header->yMin);

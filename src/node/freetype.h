@@ -13,6 +13,14 @@
   tpl->PrototypeTemplate()->Set(String::NewSymbol(name), \
       FunctionTemplate::New(func)->GetFunction())
 
+#define OBJ_SET_ARRAY(key, value, length)   \
+    {                                       \
+        Local<Array> arr = Array::New(length);    \
+        for(int i=0;i<length;i++) {             \
+            arr->Set(i, Integer::New(value[i]));              \
+        }                                       \
+        obj->Set(String::NewSymbol(key), arr); \
+    }
 
 using namespace v8;
 
