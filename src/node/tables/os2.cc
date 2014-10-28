@@ -8,7 +8,7 @@ NAN_METHOD(FreeType::GetOS2Table) {
     FreeType* ff = ObjectWrap::Unwrap<FreeType>(args.This());
     TT_OS2* os2 = (TT_OS2*) FT_Get_Sfnt_Table(ff->face, ft_sfnt_os2);
     if(os2 == NULL) {
-        NanReturnNull();
+        NanReturnUndefined();
     }
 
 //   typedef struct  TT_OS2_

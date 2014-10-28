@@ -8,7 +8,7 @@ NAN_METHOD(FreeType::GetHeaderTable) {
   FreeType* ff = ObjectWrap::Unwrap<FreeType>(args.This());
   TT_Header* header = (TT_Header*) FT_Get_Sfnt_Table(ff->face, ft_sfnt_head);
   if(header == NULL) {
-    NanReturnNull();
+        NanReturnUndefined();
   }
 
   // printf("t %x \n", header->Table_Version);

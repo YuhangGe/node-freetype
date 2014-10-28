@@ -45,6 +45,14 @@ class FreeType : public node::ObjectWrap {
     static NAN_METHOD(GetOS2Table);
     static NAN_METHOD(GetNameTable);
     static NAN_METHOD(GetInfoTable);
+    static NAN_METHOD(GetPcltTable);
+    static NAN_METHOD(GetPostTable);
+    static NAN_METHOD(GetMaxProfileTable);
+    static NAN_METHOD(GetHheaTable);
+    static NAN_METHOD(GetVheaTable);
+
+    static NAN_METHOD(GetCharIndex);
+    static NAN_METHOD(GetGlyphName);
 
     static FT_Library library;
 };
