@@ -9,6 +9,9 @@
 #define OBJ_SET_INTEGER(key, value) \
   obj->Set(String::NewSymbol(key), Integer::New(value))
 
+#define OBJ_SET_STRING(key, value) \
+  obj->Set(String::NewSymbol(key), String::New(value))
+
 #define TPL_SET_FUNC(name, func) \
   tpl->PrototypeTemplate()->Set(String::NewSymbol(name), \
       FunctionTemplate::New(func)->GetFunction())
@@ -41,7 +44,7 @@ class FreeType : public node::ObjectWrap {
     static NAN_METHOD(GetGlyphArray);
     static NAN_METHOD(Test);
 
-    static NAN_METHOD(GetHeaderTable);
+    static NAN_METHOD(GetHeadTable);
     static NAN_METHOD(GetOS2Table);
     static NAN_METHOD(GetNameTable);
     static NAN_METHOD(GetInfoTable);

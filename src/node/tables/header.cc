@@ -3,7 +3,7 @@
 #include "../freetype.h"
 #include FT_TRUETYPE_TABLES_H
 
-NAN_METHOD(FreeType::GetHeaderTable) {
+NAN_METHOD(FreeType::GetHeadTable) {
   NanScope();
   FreeType* ff = ObjectWrap::Unwrap<FreeType>(args.This());
   TT_Header* header = (TT_Header*) FT_Get_Sfnt_Table(ff->face, ft_sfnt_head);

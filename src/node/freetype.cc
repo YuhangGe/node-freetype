@@ -21,7 +21,7 @@ void FreeType::Init() {
   tpl->SetClassName(String::NewSymbol("FreeType"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-    TPL_SET_FUNC("getHeaderTable", GetHeaderTable);
+    TPL_SET_FUNC("getHeadTable", GetHeadTable);
     TPL_SET_FUNC("test", Test);
     TPL_SET_FUNC("getOS2Table", GetOS2Table);
     TPL_SET_FUNC("getNameTable", GetNameTable);
