@@ -21,5 +21,8 @@
   "dependencies": {
     "nan": "^1.3.0",
     "underscore": "^1.7.0"
+  },
+  "devDependencies": {
+    "opentype.js": "^0.3.0"
   }
 }

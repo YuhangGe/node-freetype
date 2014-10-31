@@ -41,5 +41,8 @@ Usage
     
 Todo
 -------
-* generateSubFont
-* toWOFF
+* convert to woff
+
+Bugs
+------
+* 在将NotoSansHans-Black.ttf文件转换后，字母和数字的宽度有问题。见test.html在chrome下的表现。
