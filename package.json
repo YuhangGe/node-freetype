@@ -1,6 +1,6 @@
 {
   "name": "node-freetype",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "nodejs freetype binding",
   "main": "index.js",
   "repository": {

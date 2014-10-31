@@ -35,8 +35,12 @@ Usage
     console.log(font.getCharGlyph("a"));
     console.log(font.getCharIndex("a"));
     console.log(font.getGlyphName("a"));
-    
-    //todo
+
+    var ttf = font.generateSubFont('a bcd1234ac葛羽航中国制造');
+    var ttf_buffer = ttf.toTTF();
+    fs.writeFileSync('test.ttf', ttf_buffer);
+
+    //todo generate or convert woff file.
     //fs.writeFileSync('newSubFont.woff', font.generateSubFont('abcd我爱你').toWOFF());
     
 Todo
@@ -46,3 +50,5 @@ Todo
 Bugs
 ------
 * 在将NotoSansHans-Black.ttf文件转换后，字母和数字的宽度有问题。见test.html在chrome下的表现。
+  (open test.html under test directory with Chrome and you will see this bug. but we ignore
+  test directory in npm. see github files).
