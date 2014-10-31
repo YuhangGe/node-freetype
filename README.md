@@ -45,6 +45,7 @@ Usage
     
 Todo
 -------
+* support otf file format
 * convert to woff
 
 Bugs
