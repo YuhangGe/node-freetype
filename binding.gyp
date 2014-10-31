@@ -3,7 +3,7 @@
     {
       'target_name': 'node-freetype',
       'dependencies': [
-        'libfreetype.gyp:libfreetype'
+        'gyp/libfreetype.gyp:libfreetype'
       ],
       'sources': [
         'src/node/node-module.cc',

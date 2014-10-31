@@ -10,3 +10,4 @@ test/fonts/NotoSansHans-Thin.otf
 .DS_Store
 test/check.log
 test/test.js
+npm-debug.log
