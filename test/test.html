@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Font Test</title>
+    <style type="text/css">
+        @font-face {
+            font-family: 'freetype';
+            /*src: url('superid.ttf') format('truetype');*/
+            /*src: url('NotoSansHans-Thin.otf') format('truetype');*/
+            /*src : url('test.ttf') format('truetype');*/
+            src: url('test.ttf') format('truetype');
+
+        }
+        .p1 {
+            font-family: freetype, '黑体';
+            font-size: 43px;
+        }
+        .p2 {
+            font-family: '黑体';
+            font-size: 43px;
+        }
+        .p3 {
+            font-family: Arial;
+            font-size: 45px;
+        }
+    </style>
+</head>
+<body>
+    <p class="p1">葛羽航中国制造abcd1234</p>
+    <p class="p2">葛羽航中国制造abcd1234</p>
+    <p class="p3">Hello, World!</p>
+</body>
+</html>
