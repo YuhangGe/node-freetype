@@ -42,5 +42,5 @@ var charcode = _.map(charset, function(c) {
 //d(font.generateSubFont('a葛,bcdef. '));
 
 var ttf = font.generateSubFont('a bcd1234ac葛羽航中国制造,.!');
-var ttf_buffer = ttf.toTTF();
-fs.writeFileSync('test.ttf', ttf_buffer);
+var ttf_buffer = ttf.toWOFF();
+fs.writeFileSync('test.woff', ttf_buffer);

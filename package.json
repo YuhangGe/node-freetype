@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "",
-    "install" : "node-gyp rebuild"
+    "install": "node-gyp rebuild"
   },
   "keywords": [
     "font",
@@ -21,6 +21,8 @@
   "license": "Apache",
   "dependencies": {
     "nan": "^1.3.0",
+    "pako": "^0.2.5",
+    "ttf2woff": "^1.3.0",
     "underscore": "^1.7.0"
   },
   "devDependencies": {

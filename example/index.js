@@ -44,3 +44,6 @@ var charcode = _.map(charset, function(c) {
 var ttf = font.generateSubFont('a bcd1234ac葛羽航中国制造,.!');
 var ttf_buffer = ttf.toTTF();
 fs.writeFileSync('test.ttf', ttf_buffer);
+
+var woff_buffer = ttf.toWOFF();
+fs.writeFileSync('test.woff', woff_buffer);
