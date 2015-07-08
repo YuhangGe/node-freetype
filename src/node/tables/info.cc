@@ -8,7 +8,7 @@ NAN_METHOD(FreeType::GetInfoTable) {
     FreeType* ff = ObjectWrap::Unwrap<FreeType>(args.This());
     FT_Face face = ff->face;
 
-    Local<Object> obj = Object::New();
+    Local<Object> obj = NanNew<Object>();
 
     OBJ_SET_INTEGER("numFaces", face->num_faces);
     OBJ_SET_INTEGER("faceIndex", face->face_index);

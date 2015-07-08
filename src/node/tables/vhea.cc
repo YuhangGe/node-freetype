@@ -11,7 +11,7 @@ NAN_METHOD(FreeType::GetVheaTable) {
         NanReturnUndefined();
     }
 
-    Local<Object> obj = Object::New();
+    Local<Object> obj = NanNew<Object>();
 
 //typedef struct  TT_VertHeader_
 //  {

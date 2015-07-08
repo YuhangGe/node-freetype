@@ -10,7 +10,7 @@ NAN_METHOD(FreeType::GetPcltTable) {
     if(pclt == NULL) {
         NanReturnUndefined();
     }
-    Local<Object> obj = Object::New();
+    Local<Object> obj = NanNew<Object>();
 //
 //
 //typedef struct  TT_PCLT_

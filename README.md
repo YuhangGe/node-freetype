@@ -1,12 +1,14 @@
 node-freetype
 ============
 
-nodejs [freetype](www.freetype.org) binding, inspired by
- [freetype2](https://github.com/ericfreese/node-freetype2.git) 
+nodejs [freetype](www.freetype.org) binding, inspired by(and modified from)
+ [freetype2](https://github.com/ericfreese/node-freetype2.git),
+ [svg2ttf](https://github.com/fontello/svg2ttf),
+ [ttf2woff](https://github.com/fontello/ttf2woff),
  and [opentype.js](https://github.com/nodebox/opentype.js.git),
- but keep focus on opentype(ttf, otf and woff).
+ but keep focus on opentype(ttf, otf and woff), and can extract sub charset and create new font file.
   
-node-freetype do not parse all glyphs at once like [opentype.js](https://github.com/nodebox/opentype.js.git),
+meanwhile, node-freetype do not parse all glyphs at once like [opentype.js](https://github.com/nodebox/opentype.js.git),
 so it will take little time to load big font file.
 
 Usage
@@ -40,13 +42,12 @@ Usage
     var ttf_buffer = ttf.toTTF();
     fs.writeFileSync('test.ttf', ttf_buffer);
 
-    //todo generate or convert woff file.
-    //fs.writeFileSync('newSubFont.woff', font.generateSubFont('abcd我爱你').toWOFF());
-    
+    var woff_buffer = ttf.toWOFF();
+    fs.writeFileSync('test.woff', woff_buffer);
+
 Todo
 -------
-* support otf file format
-* convert to woff
+* support open otf file format
 
 Bugs
 ------

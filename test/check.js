@@ -7,15 +7,14 @@ var d = function() {
     console.log.apply(this, arguments);
 };
 
-var src = fs.readFileSync(path.join(__dirname, 'fonts/NotoSansHans-Medium.ttf'));
+var src = fs.readFileSync(path.join(__dirname, 'fonts/Gulim.ttf'));
 var font = freetype.parse(src);
 
-//var charset = 'abcdefg中国超级账号';
-var charset = 'a中';
-
-var charcode = _.map(charset, function(c) {
-    return c.charCodeAt(0);
-});
+//var charset = 'a中';
+//
+//var charcode = _.map(charset, function(c) {
+//    return c.charCodeAt(0);
+//});
 
 //var glyphs = font.getGlyphArray(charcode);
 
@@ -41,6 +40,6 @@ var charcode = _.map(charset, function(c) {
 //d(font.getCharGlyph(charcode));
 //d(font.generateSubFont('a葛,bcdef. '));
 
-var ttf = font.generateSubFont('a bcd1234ac葛羽航中国制造,.!');
-var ttf_buffer = ttf.toWOFF();
-fs.writeFileSync('test.woff', ttf_buffer);
+var ttf = font.generateSubFont('Flaming Cloud');
+var ttf_buffer = ttf.toTTF();
+fs.writeFileSync('fonts/generate.ttf', ttf_buffer);

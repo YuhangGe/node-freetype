@@ -10,7 +10,7 @@ NAN_METHOD(FreeType::GetMaxProfileTable) {
     if(maxp == NULL) {
         NanReturnUndefined();
     }
-    Local<Object> obj = Object::New();
+    Local<Object> obj = NanNew<Object>();
 
 //typedef struct  TT_MaxProfile_
 //  {

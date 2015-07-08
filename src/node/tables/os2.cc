@@ -68,7 +68,7 @@ NAN_METHOD(FreeType::GetOS2Table) {
 //
 //    } TT_OS2;
 
-    Local<Object> obj = Object::New();
+    Local<Object> obj = NanNew<Object>();
 
     OBJ_SET_INTEGER("version", os2->version);
     OBJ_SET_INTEGER("xAvgCharWidth", os2->xAvgCharWidth);

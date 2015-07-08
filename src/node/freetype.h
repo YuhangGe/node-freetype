@@ -7,29 +7,25 @@
 #include FT_FREETYPE_H
 
 #define OBJ_SET_INTEGER(key, value) \
-  obj->Set(String::NewSymbol(key), Integer::New(value))
+  obj->Set(NanNew<String>(key), NanNew<Number>(value))
 
 #define OBJ_SET_STRING(key, value) \
-  obj->Set(String::NewSymbol(key), String::New(value))
-
-#define TPL_SET_FUNC(name, func) \
-  tpl->PrototypeTemplate()->Set(String::NewSymbol(name), \
-      FunctionTemplate::New(func)->GetFunction())
+  obj->Set(NanNew<String>(key), NanNew<String>(value))
 
 #define OBJ_SET_ARRAY(key, value, length)   \
     {                                       \
-        Local<Array> arr = Array::New(length);    \
+        Local<Array> arr = NanNew<Array>(length);    \
         for(int i=0;i<length;i++) {             \
-            arr->Set(i, Integer::New(value[i]));              \
+            arr->Set(i, NanNew<Number>(value[i]));              \
         }                                       \
-        obj->Set(String::NewSymbol(key), arr); \
+        obj->Set(NanNew<String>(key), arr); \
     }
 
 using namespace v8;
 
 class FreeType : public node::ObjectWrap {
   public:
-    static void Init();
+    static void Init(Handle<Object> exports);
     static Handle<Value> NewInstance(_NAN_METHOD_ARGS_TYPE args);
 
     FT_Face face;

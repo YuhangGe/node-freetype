@@ -10,7 +10,7 @@ NAN_METHOD(FreeType::GetPostTable) {
     if(post == NULL) {
         NanReturnUndefined();
     }
-    Local<Object> obj = Object::New();
+    Local<Object> obj = NanNew<Object>();
 
 // typedef struct  TT_Postscript_
 //  {

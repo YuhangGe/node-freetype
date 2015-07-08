@@ -41,7 +41,7 @@ NAN_METHOD(FreeType::GetHeadTable) {
 
   } TT_Header;
 */
-  Local<Object> obj = Object::New();
+  Local<Object> obj = NanNew<Object>();
 
   OBJ_SET_INTEGER("tableVersion", header->Table_Version);
   OBJ_SET_INTEGER("fontRevision", header->Font_Revision);

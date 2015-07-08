@@ -14,55 +14,52 @@ FreeType::~FreeType() {
 
 FT_Library FreeType::library;
 
-void FreeType::Init() {
-  if (FT_Init_FreeType(&library)) exit(EXIT_FAILURE);
+void FreeType::Init(Handle<Object> exports) {
+  Isolate* isolate = Isolate::GetCurrent();
 
-  Local<FunctionTemplate> tpl = FunctionTemplate::New(New);
-  tpl->SetClassName(String::NewSymbol("FreeType"));
+  if (FT_Init_FreeType(&library)) {
+//    printf('init freetype failure');
+    exit(EXIT_FAILURE);
+  }
+
+  Local<FunctionTemplate> tpl = FunctionTemplate::New(isolate, New);
+
+  tpl->SetClassName(NanNew<String>("FreeType"));
   tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
-    TPL_SET_FUNC("getHeadTable", GetHeadTable);
-    TPL_SET_FUNC("test", Test);
-    TPL_SET_FUNC("getOS2Table", GetOS2Table);
-    TPL_SET_FUNC("getNameTable", GetNameTable);
-    TPL_SET_FUNC("getInfo", GetInfoTable);
-    TPL_SET_FUNC("getPostTable", GetPostTable);
-    TPL_SET_FUNC("getPcltTable", GetPcltTable);
-    TPL_SET_FUNC("getMaxProfileTable", GetMaxProfileTable);
-    TPL_SET_FUNC("getHheaTable", GetHheaTable);
-    TPL_SET_FUNC("getVheaTable", GetVheaTable);
-    TPL_SET_FUNC("getCharIndex", GetCharIndex);
-    TPL_SET_FUNC("getGlyphName", GetGlyphName);
 
-    constructor = v8::Persistent<Function>::New(tpl->GetFunction());
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getHeadTable", GetHeadTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getOS2Table", GetOS2Table);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getNameTable", GetNameTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getInfo", GetInfoTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getPostTable", GetPostTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getPcltTable", GetPcltTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getMaxProfileTable", GetMaxProfileTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getHheaTable", GetHheaTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getVheaTable", GetVheaTable);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getCharIndex", GetCharIndex);
+    NODE_SET_PROTOTYPE_METHOD(tpl, "getGlyphName", GetGlyphName);
+
+  constructor.Reset(isolate, tpl->GetFunction());
+  exports->Set(String::NewFromUtf8(isolate, "FreeType"), tpl->GetFunction());
 }
 
-NAN_METHOD(FreeType::New) {
-  NanScope();
+void FreeType::New(const FunctionCallbackInfo<Value>& args) {
+  Isolate* isolate = Isolate::GetCurrent();
+  HandleScope scope(isolate);
 
-  FreeType* obj = new FreeType(
-    (FT_Byte*)node::Buffer::Data(args[0]->ToObject()),
-    (FT_Long)node::Buffer::Length(args[0]->ToObject())
-  );
-  obj->Wrap(args.This());
-
-  NanReturnValue(args.This());
-}
-
-Handle<Value> FreeType::NewInstance(_NAN_METHOD_ARGS_TYPE args) {
-  NanScope();
-
-  const unsigned argc = 1;
-  Handle<Value> argv[argc] = { args[0] };
-  Local<Object> instance = constructor->NewInstance(argc, argv);
-
-  return scope.Close(instance);
-}
-
-NAN_METHOD(FreeType::Test) {
-  NanScope();
-
-  NanReturnValue(String::New("hello, world."));
+  if (args.IsConstructCall()) {
+      FreeType* obj = new FreeType(
+        (FT_Byte*)node::Buffer::Data(args[0]->ToObject()),
+        (FT_Long)node::Buffer::Length(args[0]->ToObject())
+      );
+      obj->Wrap(args.This());
+      args.GetReturnValue().Set(args.This());
+  } else {
+    Local<Value> argv[1] = { args[0] };
+    Local<Function> cons = Local<Function>::New(isolate, constructor);
+    args.GetReturnValue().Set(cons->NewInstance(1, argv));
+  }
 }
 
 
@@ -83,7 +80,7 @@ NAN_METHOD(FreeType::GetGlyphArray) {
         if(ele->IsInt32()) {
           FT_ULong code = (FT_ULong) ele->IntegerValue();
           // charArray.push_back();
-          printf("cd: %lu \n", code);
+//          printf("cd: %lu \n", code);
           FT_Load_Char(obj->face, code, 0);
         }
     }
@@ -95,7 +92,7 @@ NAN_METHOD(FreeType::GetGlyphArray) {
 
     while(idx<len) {
       FT_GlyphSlot glyph = NULL;
-      printf("idx: %d\n", idx);
+//      printf("idx: %d\n", idx);
       if(idx == 0) {
         glyph = obj->face->glyph;
       } else {
@@ -108,10 +105,10 @@ NAN_METHOD(FreeType::GetGlyphArray) {
         break;
       }
 
-      printf("g: %d \n", glyph->format);
+//      printf("g: %d \n", glyph->format);
 
-      v8::Local<Object> _g = v8::Object::New();
-      _g->Set(String::NewSymbol("glyphFormat"), Integer::New(glyph->format));
+      v8::Local<Object> _g = NanNew<Object>();
+      _g->Set(NanNew<String>("glyphFormat"), NanNew<Number>(glyph->format));
 
       g_arr.push_back(_g);
 
@@ -119,7 +116,7 @@ NAN_METHOD(FreeType::GetGlyphArray) {
 
     }
 
-    v8::Local<Array> rtn_arr = Array::New(g_arr.size());
+    v8::Local<Array> rtn_arr = NanNew<Array>(g_arr.size());
 
     len = g_arr.size();
     for(idx=0;idx<len;idx++) {
@@ -144,19 +141,19 @@ NAN_METHOD(FreeType::GetCharIndex) {
     if(args[0]->IsNumber()) {
         cc = Local<Integer>::Cast(args[0])->Value();
         idx = FT_Get_Char_Index(ff->face, cc);
-        NanReturnValue(Integer::New(idx));
+        NanReturnValue(NanNew<Integer>(idx));
     } else if(args[0]->IsArray()) {
         Local<Array> arr= Local<Array>::Cast(args[0]);
         int len = arr->Length();
-        Local<Array> rtnArr = Array::New(len);
+        Local<Array> rtnArr = NanNew<Array>(len);
         for(int i = 0; i < len; i++) {
             v8::Local<v8::Value> ele = arr->Get(i);
             if(ele->IsInt32()) {
                cc = (FT_ULong) ele->IntegerValue();
                idx = FT_Get_Char_Index(ff->face, cc);
-               rtnArr->Set(i, Integer::New(idx));
+               rtnArr->Set(i, NanNew<Integer>(idx));
             } else {
-               rtnArr->Set(i, Integer::New(-1));
+               rtnArr->Set(i, NanNew<Integer>(-1));
             }
         }
         NanReturnValue(rtnArr);
@@ -179,25 +176,25 @@ NAN_METHOD(FreeType::GetGlyphName) {
         if(args[0]->IsNumber()) {
             idx = Local<Integer>::Cast(args[0])->Value();
             if(FT_Get_Glyph_Name(ff->face, idx, buf, b_len) == 0) {
-                NanReturnValue(String::New(buf));
+                NanReturnValue(NanNew<String>(buf));
             } else {
                 NanReturnUndefined();
             }
         } else if(args[0]->IsArray()) {
             Local<Array> arr= Local<Array>::Cast(args[0]);
             int len = arr->Length();
-            Local<Array> rtnArr = Array::New(len);
+            Local<Array> rtnArr = NanNew<Array>(len);
             for(int i = 0; i < len; i++) {
                 v8::Local<v8::Value> ele = arr->Get(i);
                 if(ele->IsInt32()) {
                    idx = (FT_ULong) ele->IntegerValue();
                    if(FT_Get_Glyph_Name(ff->face, idx, buf, b_len) == 0) {
-                      rtnArr->Set(i, String::New(buf));
+                      rtnArr->Set(i, NanNew<String>(buf));
                    } else {
-                      rtnArr->Set(i, Undefined());
+                      rtnArr->Set(i, NanUndefined());
                    }
                 } else {
-                   rtnArr->Set(i, Undefined());
+                   rtnArr->Set(i, NanUndefined());
                 }
             }
             NanReturnValue(rtnArr);

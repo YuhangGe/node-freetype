@@ -6,6 +6,7 @@ build
 test/fonts/NotoSansHans-Black.ttf
 test/fonts/NotoSansHans-Medium.ttf
 test/fonts/NotoSansHans-Thin.otf
+test/fonts/NotoSansHans-Thin.ttf
 
 .DS_Store
 test/check.log
